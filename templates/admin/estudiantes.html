@@ -1,0 +1,97 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}
+Estudiantes
+{% endblock %}
+
+{% block content %}
+<div class="app-content"> <!--begin::Container-->
+    <div class="container-fluid"> <!--begin::Row-->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h3 class="card-title text-center">Estudiantes</h3>
+                        <!-- Botón para descargar todos los diagnósticos -->
+                        <div class="float-end">
+                            <!-- Input de búsqueda -->
+                            <input type="text" id="searchInput" class="form-control" placeholder="Buscar Estudiante...">
+                        </div>
+                    </div> <!-- /.card-header -->
+                    <div class="card-body">
+                        <table class="table table-bordered table-hover" id="studentsTable">
+                            <thead class="text-center">
+                                <tr>
+                                    <th class="align-middle">ID Estudiante</th>  <!-- Nueva columna -->
+                                    <th class="align-middle">Nombre</th>
+                                    <th class="align-middle">Ciclo</th>
+                                    <th class="align-middle">Región</th>
+                                    <th class="align-middle">Sección</th>
+                                    <th class="align-middle">Turno</th>
+                                    <th class="align-middle">Celular</th>
+                                    <th class="align-middle">Código</th>
+                                    <th class="align-middle">Acciones</th> <!-- Nueva columna para eliminar -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for estudiante in estudiantes %}
+                                    <tr class="align-middle">
+                                        <td>{{ estudiante.id_estudiante }}</td>  <!-- Mostrar el ID del estudiante -->
+                                        <td>{{ estudiante.nombre }}</td>
+                                        <td>{{ estudiante.ciclo }}</td>
+                                        <td>{{ estudiante.region }}</td>
+                                        <td>{{ estudiante.seccion }}</td>
+                                        <td>{{ estudiante.turno }}</td>
+                                        <td>{{ estudiante.num_celular }}</td>
+                                        <td>{{ estudiante.codigo }}</td>
+                                        <td class="text-center">
+                                            <!-- Botón de eliminar -->
+                                            <a href="{{ url_for('admin.eliminar_estudiante', id_estudiante=estudiante.id_estudiante) }}" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar este estudiante?')" title="Eliminar">
+                                                <i class="fas fa-trash-alt"></i> <!-- Ícono de eliminar -->
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="7" class="text-center">No hay estudiantes disponibles</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div> <!-- /.card-body -->
+                </div> <!-- /.card -->
+            </div> <!-- /.col -->
+        </div> <!--end::Row-->
+    </div> <!--end::Container-->
+</div> <!--end::App Content-->
+
+<!-- Script de búsqueda -->
+<script>
+    document.getElementById("searchInput").addEventListener("input", function() {
+        let filter = this.value.toLowerCase();
+        let rows = document.querySelectorAll("#studentsTable tbody tr");
+        
+        rows.forEach(row => {
+            let cells = row.querySelectorAll("td");
+            let matches = false;
+            
+            // Revisa todas las celdas de cada fila
+            cells.forEach(cell => {
+                if (cell.textContent.toLowerCase().includes(filter)) {
+                    matches = true;
+                }
+            });
+            
+            // Mostrar o esconder la fila según la coincidencia con la búsqueda
+            if (matches) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    });
+</script>
+
+{% endblock %}
+
+

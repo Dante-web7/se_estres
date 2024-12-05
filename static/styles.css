@@ -1,0 +1,183 @@
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+}
+body {
+    background-image: url('/static/pipo.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: repeat;
+}
+
+.content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction:row;
+}
+
+/* Contenedor de la superposición */
+.overlay-content {
+    width: 65%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    z-index: -1;
+}
+
+/* Estilo para el texto principal */
+.text-center {
+    text-align: center;
+    font-size: 4rem;
+    font-weight: bold;
+}
+
+/* Contenedor para los botones alineados a la derecha */
+.container-right {
+    position: relative;
+    width: 35%;
+    justify-content: right;
+    background-color: rgba(0, 0, 0, 0.4); /* 0.4 es la transparencia */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 150px;
+    align-items: center;
+}
+
+/* Botón en forma de corazón */
+/* Botón en forma de corazón */
+.hearth {
+    height: 150px;
+    width: 150px;
+    background-color: red;
+    position: relative;
+    transform: rotate(45deg);
+    box-shadow: -20px 20px 150px #f20404;
+    animation: palpitar 0.5s linear infinite alternate;
+    display: flex;
+    justify-content: center;
+    align-items: top;
+    text-decoration: none; /* Quita el subrayado del enlace */
+}
+
+.heart-text {
+    transform: rotate(-45deg); /* Rota el texto de regreso a la posición correcta */
+    color: white;
+    font-weight: bold;
+    font-size: 2rem;
+    text-align: center;
+    padding-top: 13%;
+    z-index: 1;
+}
+
+
+h1 {
+    color: white;}
+h2 {
+    color: white;
+}
+
+@keyframes palpitar {
+0%{transform: rotate(45deg) scale(1.10);}
+80%{transform: rotate(45deg) scale(1.0);}
+100%{transform: rotate(45deg) scale(0.8);}
+}
+
+.hearth::before {
+    content: "";
+    position: absolute;
+    height: 150px;
+    width: 150px;
+    background-color: red;
+    right: 50%;
+    border-radius: 50%;
+    box-shadow: 20px 20px 150px #f20404;
+
+}
+
+.hearth::after {
+    content: "";
+    position: absolute;
+    height: 150px;
+    width: 150px;
+    background-color: red;
+    top: -50%;
+    border-radius: 50%;
+    box-shadow: 20px 20px 150px #f20404;
+    
+}
+
+
+/* Botón normal */
+.normal-button {
+    background-color: #00cc99;
+    color: white;
+    font-weight: bold;
+    font-size: 1.9rem;
+    text-align: center;
+    padding: 15px 25px;
+    text-decoration: none;
+    border-radius: 150px;
+    width: 300px;
+    transition: background-color 0.3s ease;
+}
+
+.normal-button:hover {
+    background-color: #009973;
+}
+
+/* Media query para pantallas de menos de 768px (tablets y móviles) */
+@media (max-width: 768px) {
+    /* Cambia a columna para pantallas pequeñas */
+    .content {
+        flex-direction: column;
+    }
+
+    /* Ajusta el ancho de los paneles */
+    .overlay-content, .container-right {
+        width: 100%;
+    }
+
+    /* Reduce el tamaño del texto principal */
+    .text-center {
+        font-size: 2.2rem;
+        padding: 20px;
+    }
+
+    /* Ajuste de los botones para pantallas pequeñas */
+    .button-container {
+        gap: 20px;
+    }
+
+    /* Ajusta el tamaño del botón de corazón */
+    .hearth {
+        height: 80px;
+        width: 80px;
+    }
+
+    .heart-text {
+        font-size: 1rem;
+    }
+
+    /* Ajusta el tamaño del botón normal */
+    .normal-button {
+        font-size: 1.2rem;
+        width: 200px;
+    }
+}

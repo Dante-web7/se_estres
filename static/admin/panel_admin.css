@@ -1,0 +1,8 @@
+/* Aplica estilos solo a elementos dentro del panel de administración */
+.admin-panel .table {
+    border: 1px solid #ccc;
+}
+
+.admin-panel .sidebar {
+    background-color: #343a40;
+}

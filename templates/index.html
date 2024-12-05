@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Porque Me Quiero</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='styles.css')}}">
+</head>
+<body>
+    
+    <div class="content">
+        <!--Panel de INICIO-->
+        <div class="overlay-content">
+            <div class="text-center">
+                <h1>SI ESTÁS PREOCUPAD@<br>NO TE<br>PREOCUPES</h1>
+            </div>
+        </div>
+        <div class="container-right">
+            <div class="button-container">
+                <a href="{{ url_for('registro_usuario') }}" class="hearth">
+                    <span class="heart-text">COMENZAR TEST</span>
+                </a>
+                <a href="{{ url_for('admin.login_admin') }}" class="normal-button">INICIAR SESIÓN</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+    

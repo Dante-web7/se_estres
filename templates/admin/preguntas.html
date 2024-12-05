@@ -1,0 +1,49 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}
+Preguntas
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Botón para agregar una nueva pregunta -->
+    <a href="{{ url_for('admin.agregar_pregunta') }}" class="btn btn-sm btn-success mb-3">Agregar Pregunta</a>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>ID Pregunta</th> <!-- Mostrar ID de la pregunta -->
+                <th>Texto de la Pregunta</th>
+                <th>Invertir</th>
+                <th>Acciones</th> <!-- Columna para editar y eliminar -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for pregunta in preguntas %}
+                <tr>
+                    <td>{{ pregunta.id_pregunta }}</td> <!-- Mostrar el ID -->
+                    <td>{{ pregunta.texto }}</td>
+                    <td>{{ pregunta.invertir }}</td>
+                    <td class="text-center">
+                        <!-- Botón de Editar -->
+                        <a href="{{ url_for('admin.editar_pregunta', id_pregunta=pregunta.id_pregunta) }}" class="btn btn-sm btn-warning" title="Editar">
+                            <i class="fas fa-edit"></i> <!-- Ícono de editar -->
+                        </a>
+
+                        <!-- Botón de Eliminar -->
+                        <a href="{{ url_for('admin.eliminar_pregunta', id_pregunta=pregunta.id_pregunta) }}" class="btn btn-sm btn-danger ml-2" onclick="return confirm('¿Estás seguro de que deseas eliminar esta pregunta?')" title="Eliminar">
+                            <i class="fas fa-trash-alt"></i> <!-- Ícono de eliminar -->
+                        </a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">No hay preguntas disponibles</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+
+

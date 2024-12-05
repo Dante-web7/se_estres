@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pregunta {{num}}</title>
+    <link rel="stylesheet" href="/static/preguntas.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
+    </style>
+</head>
+<body>
+    <div id="progreso">Progreso: Pregunta {{ num }} de {{ total_preguntas }}</div>
+    <div class="card">
+        <h2>Pregunta {{num}} de {{ total_preguntas }}</h2>
+        <p>{{ pregunta }}</p>
+
+        <form id="questionForm" method="post">
+            <label><input type="radio" name="respuesta" value="0"> Nunca</label><br>
+            <label><input type="radio" name="respuesta" value="1"> Casi Nunca</label><br>
+            <label><input type="radio" name="respuesta" value="2"> De vez en cuando</label><br>
+            <label><input type="radio" name="respuesta" value="3"> A menudo</label><br>
+            <label><input type="radio" name="respuesta" value="4"> Muy a menudo</label><br>
+            <button type="submit">Siguiente</button><br>
+        </form>
+    </div>
+
+    <!--Script de validacion-->
+    <script>
+        document.getElementById("questionForm").onsubmit = function(event){
+            const respuestaSeleccionada = document.querySelector("input[name='respuesta']:checked");
+            if (!respuestaSeleccionada){
+                alert("Por favor, seleccione una respuesta.");
+                event.preventDefault(); //Evita el envio del formulario
+                return;
+            }
+
+            //añadir la clase de transicion antes de enviar
+            document.body.classList.add("fade-out");
+        }
+    </script>
+</body>
+</html>

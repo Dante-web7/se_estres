@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RESULTADOS DEL TEST</title>
+    <link rel="stylesheet" href="/static/resultados.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
+    </style>
+
+</head>
+<body>
+    <div class="result-card {{ nivel_clase }}">
+        <h1>RESULTADOS DEL ESTRÉS</h1>
+        <!-- Emoji y mensaje personalizado según el nivel de estrés -->
+        {% if nivel_clase == "bajo" %}
+            <p class="emoji">😊</p>
+            <p class="mensaje-empatico">¡Qué bien, {{ nombre_estudiante }}! Estás manejando el estrés de manera excelente. Sigue así y disfruta cada momento.</p>
+        {% elif nivel_clase == "moderado" %}
+            <p class="emoji">🙂</p>
+            <p class="mensaje-empatico">Hola {{ nombre_estudiante }}, recuerda que un poco de estrés es natural. Aquí tienes algunas recomendaciones para mantener el equilibrio.</p>
+        {% elif nivel_clase == "alto" %}
+            <p class="emoji">😟</p>
+            <p class="mensaje-empatico">Hola {{ nombre_estudiante }}, sabemos que puedes superar estos momentos. Sigue estos consejos y da pequeños pasos para sentirte mejor.</p>
+        {% elif nivel_clase == "muy-alto" %}
+            <p class="emoji">😣</p>
+            <p class="mensaje-empatico">Sabemos que puedes con esto, {{ nombre_estudiante }}. Busca apoyo y cuida de ti mismo. ¡Estamos aquí para ayudarte!</p>
+        {% endif %}
+
+        <p><strong>Puntaje total:</strong> {{ puntaje_total }}</p>
+        <p><strong>Nivel de estrés:</strong> {{ nivel_estres }}</p>
+        
+        <h2>Recomendaciones:</h2>
+        <ul class="recomendaciones">
+            {% for recomendacion in recomendaciones %}
+                <li>🌿 {{ recomendacion }}</li>
+            {% endfor %}
+        </ul>
+
+        <div class="compartir">
+            <p>¿Quieres compartir tus resultados? ¡Compártelos con tus amigos en redes sociales!</p>
+            <!-- Botón para compartir en WhatsApp -->
+            <a href="https://wa.me/?text=¡Hola! Acabo de realizar mi test de estrés y estos son mis resultados: {{ nivel_estres }}. ¡Haz el tuyo también!" target="_blank" class="btn-whatsapp">
+                Compartir en WhatsApp
+            </a>
+            <!-- Botón para compartir en Instagram -->
+            <a href="https://www.instagram.com/" target="_blank" class="btn-instagram">
+                Compartir en Instagram
+            </a>
+            <!-- Botón para compartir en Facebook -->
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https://tu-dominio.com/resultados/{{ id_estudiante }}" target="_blank" class="btn-facebook">
+                Compartir en Facebook
+            </a>
+        </div>        
+    
+        <a href="{{url_for('index')}}" class="boton-volver">Volver al inicio</a>
+    </div>
+</body>
+</html>

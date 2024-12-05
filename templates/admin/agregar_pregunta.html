@@ -1,0 +1,25 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}
+Agregar Pregunta
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h2>Agregar Nueva Pregunta</h2>
+    
+    <form method="POST">
+        <div class="mb-3">
+            <label for="texto" class="form-label">Texto de la Pregunta</label>
+            <input type="text" class="form-control" id="texto" name="texto" required>
+        </div>
+        
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="invertir" name="invertir">
+            <label class="form-check-label" for="invertir">Invertir Respuesta</label>
+        </div>
+        
+        <button type="submit" class="btn btn-success">Agregar Pregunta</button>
+    </form>
+</div>
+{% endblock %}

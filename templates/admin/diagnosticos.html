@@ -1,0 +1,103 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}
+Diagnósticos
+{% endblock %}
+
+{% block content %}
+<div class="app-content"> <!--begin::Container-->
+    <div class="container-fluid"> <!--begin::Row-->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h3 class="card-title text-center">Diagnósticos de Estudiantes</h3>
+                        
+                        <!-- Formulario para búsqueda por nombre o código del estudiante -->
+                        <form method="GET" action="{{ url_for('admin.diagnosticos') }}" class="d-flex float-end">
+                            <input type="text" name="search_term" class="form-control form-control-sm" placeholder="Buscar por nombre o código..." value="{{ search_term }}" />
+                            <button type="submit" class="btn btn-sm btn-info ml-2">Buscar</button>
+                        </form>
+                        <!-- Botón para descargar todos los diagnósticos -->
+                        <a href="{{ url_for('admin.exportar_diagnosticos') }}" class="btn btn-sm btn-success float-end">Descargar Diagnósticos</a>
+                    </div> <!-- /.card-header -->
+                    <div class="card-body">
+                        <table class="table table-bordered table-hover">
+                            <thead class="text-center">
+                                <tr>
+                                    <th class="align-middle">ID Diagnóstico</th>
+                                    <th class="align-middle">Nombre del Estudiante</th>
+                                    <th class="align-middle">Puntaje Total</th>
+                                    <th class="align-middle">Nivel de Estrés</th>
+                                    <th class="align-middle">Nivel de Clase</th>
+                                    <th class="align-middle">Recomendaciones</th>
+                                    <th class="align-middle">Fecha de Diagnóstico</th>
+                                    <th class="align-middle">Acciones</th> <!-- Cambiado a Acciones -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for diagnostico in diagnosticos %}
+                                    <tr class="align-middle">
+                                        <td>{{ diagnostico.id_diagnostico }}</td>
+                                        <td>{{ diagnostico.nombre }}</td>
+                                        <td>{{ diagnostico.puntaje_total }}</td>
+
+                                        <!-- Nivel de Estrés con colores -->
+                                        <td>
+                                            {% if diagnostico.puntaje_total <= 14 %}
+                                                <span class="badge text-bg-success">{{ diagnostico.nivel_estres }}</span>
+                                            {% elif diagnostico.puntaje_total <= 28 %}
+                                                <span class="badge text-bg-warning">{{ diagnostico.nivel_estres }}</span>
+                                            {% elif diagnostico.puntaje_total <= 42 %}
+                                                <span class="badge text-bg-danger">{{ diagnostico.nivel_estres }}</span>
+                                            {% else %}
+                                                <span class="badge text-bg-dark">{{ diagnostico.nivel_estres }}</span>
+                                            {% endif %}
+                                        </td>
+
+                                        <td>{{ diagnostico.nivel_clase }}</td>
+                                        <td>{{ diagnostico.recomendaciones }}</td>
+                                        <td>{{ diagnostico.fecha_diagnostico }}</td>
+
+                                        <!-- Nueva columna de Acciones con íconos -->
+                                        <td>
+                                            <div class="d-flex justify-content-center"> <!-- Usando d-flex para alinear los botones -->
+                                                <!-- Botón para descargar respuestas -->
+                                                <a href="{{ url_for('admin.exportar_respuestas', id_estudiante=diagnostico['id_estudiante'], nombre_estudiante=diagnostico['nombre']) }}" class="btn btn-sm btn-primary" title="Descargar Respuestas">
+                                                    <i class="fas fa-download"></i> <!-- Ícono de descarga -->
+                                                </a>
+                                                
+                                                <!-- Botón para eliminar registro -->
+                                                <a href="{{ url_for('admin.eliminar_diagnostico', id_diagnostico=diagnostico['id_diagnostico']) }}" class="btn btn-sm btn-danger ml-2" onclick="return confirm('¿Estás seguro de que deseas eliminar este diagnóstico?')" title="Eliminar">
+                                                    <i class="fas fa-trash-alt"></i> <!-- Ícono de eliminar -->
+                                                </a>
+                                            </div>
+                                        </td>
+                                        
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="7" class="text-center">No hay diagnósticos disponibles</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div> <!-- /.card-body -->
+                    <div class="card-footer clearfix">
+                        <ul class="pagination pagination-sm m-0 float-end">
+                            <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                        </ul>
+                    </div> <!-- /.card-footer -->
+                </div> <!-- /.card -->
+            </div> <!-- /.col -->
+        </div> <!--end::Row-->
+    </div> <!--end::Container-->
+</div> <!--end::App Content-->
+{% endblock %}
+
+
+
