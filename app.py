@@ -44,7 +44,7 @@ def registro_usuario():
 @app.route('/guardar_datos', methods=['POST'])
 def guardar_datos():
     # Capturar los datos del formulario
-    nombre = request.form['nombre']
+    nombre = request.form['nombre'].upper()
     edad = request.form['edad']
     sex = request.form['sex']
     num_celular = request.form['num_celular']
@@ -97,15 +97,28 @@ def pregunta(num):
         id_estudiante = session.get('id_estudiante')
 
         if id_estudiante and respuesta is not None:
-            # Guardar la respuesta en la base de datos
+            # Verificar si ya existe una respuesta para esta pregunta y estudiante
             id_pregunta = preguntas[num - 1][0]
             connection = get_db_connection()
             cursor = connection.cursor()
-            query = """
-                INSERT INTO respuestas (id_estudiante, id_pregunta, respuesta)
-                VALUES (%s, %s, %s)
-            """
-            cursor.execute(query, (id_estudiante, id_pregunta, int(respuesta)))
+            cursor.execute("""
+                SELECT * FROM respuestas WHERE id_estudiante = %s AND id_pregunta = %s
+            """, (id_estudiante, id_pregunta))
+            existing_respuesta = cursor.fetchone()
+
+            if existing_respuesta:
+                # Si la respuesta ya existe, actualízala
+                cursor.execute("""
+                    UPDATE respuestas
+                    SET respuesta = %s
+                    WHERE id_estudiante = %s AND id_pregunta = %s
+                """, (int(respuesta), id_estudiante, id_pregunta))
+            else:
+                # Si no existe, insertar una nueva respuesta
+                cursor.execute("""
+                    INSERT INTO respuestas (id_estudiante, id_pregunta, respuesta)
+                    VALUES (%s, %s, %s)
+                """, (id_estudiante, id_pregunta, int(respuesta)))
             connection.commit()
             cursor.close()
             connection.close()

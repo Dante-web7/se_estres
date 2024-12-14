@@ -116,7 +116,7 @@ def estudiantes():
     cursor = connection.cursor(dictionary=True)
 
     # Aquí puedes agregar la lógica para mostrar los estudiantes
-    query = "SELECT id_estudiante, nombre, ciclo, region, seccion, turno, num_celular, codigo FROM estudiantes"
+    query = "SELECT id_estudiante, nombre, edad, ciclo, region, seccion, turno, num_celular, codigo FROM estudiantes"
     cursor.execute(query)
     estudiantes = cursor.fetchall()
 
@@ -159,7 +159,7 @@ def exportar_respuestas(id_estudiante):
 
     # Obtener las respuestas del estudiante específico con sus textos y el campo 'invertir'
     query = """
-        SELECT p.texto AS pregunta, o.opcion AS respuesta, r.respuesta AS valor, p.invertir
+        SELECT DISTINCT p.texto AS pregunta, o.opcion AS respuesta, r.respuesta AS valor, p.invertir
         FROM respuestas r
         JOIN preguntas p ON r.id_pregunta = p.id_pregunta
         JOIN opciones o ON r.respuesta = o.valor
